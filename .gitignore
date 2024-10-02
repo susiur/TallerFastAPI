@@ -1,0 +1,5 @@
+# Ignorar la carpeta 'proyecto'
+proyecto/
+
+# Ignorar el archivo 'Miniconda3-latest-Linux-x86_64.sh'
+Miniconda3-latest-Linux-x86_64.sh
