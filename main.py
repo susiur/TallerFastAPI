@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from datetime import date
 from enum import Enum
 import pandas as pd
+from typing import List
 
 app = FastAPI()
 
@@ -71,6 +72,21 @@ def read_item(region: str, limit: int = Query(100, le=100), offset: int = 0):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error while performing the query: {str(e)}")
+
 @app.post("/items/")
-def create_item(item: Item):
-    return {"name": item.name, "description": item.description, "price": item.price}
+async def create_items(items: List[Item]):
+    query = f"""
+        SELECT * 
+        FROM avocado_price 
+        """
+
+    fake_db = pd.read_sql(query, engine)
+
+    # Insertar los nuevos registros en la "base de datos"
+    final_count = len(fake_db)
+    
+    # Devolver el número de registros insertados y el total
+    return {
+        "message": f"Se insertaron {len(items)} registros.",
+        "total_records": final_count
+    }
