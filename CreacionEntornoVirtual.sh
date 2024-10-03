@@ -3,8 +3,6 @@ sudo apt update
 sudo apt install postgresql-client
 
 #creation for the virtual enviroment
-mkdir proyecto
-cd proyecto
 touch requierements.txt
 mkdir EntornoVirtual
 cd EntornoVirtual
