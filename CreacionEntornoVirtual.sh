@@ -18,4 +18,5 @@ echo "sqlalchemy" >> requierements.txt
 echo "asyncpg" >> requierements.txt
 echo "psycopg2-binary" >> requierements.txt
 echo "alembic" >> requierements.txt
+echo "pydantic" >> requierements.txt
 pip install -r requierements.txt
