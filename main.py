@@ -82,7 +82,6 @@ async def create_items(items: List[Item]):
 
     fake_db = pd.read_sql(query, engine)
 
-    # Insertar los nuevos registros en la "base de datos"
     final_count = len(fake_db)
     
     # Devolver el número de registros insertados y el total
