@@ -75,17 +75,26 @@ def read_item(region: str, limit: int = Query(100, le=100), offset: int = 0):
 
 @app.post("/items/")
 async def create_items(items: List[Item]):
-    query = f"""
-        SELECT * 
-        FROM avocado_price 
+    try:
+        if not items or not all(isinstance(item, Item) for item in items):
+            raise HTTPException(status_code=422, detail="Invalid or incomplete data for inserting records.")
+        
+        query = """
+            SELECT * 
+            FROM avocado_price
         """
-
-    fake_db = pd.read_sql(query, engine)
-
-    final_count = len(fake_db)
+        
+        fake_db = pd.read_sql(query, engine)
+        
+        final_count = len(fake_db)
+        
+        return {
+            "message": f"{len(items)} records were inserted.",
+            "total_records": final_count
+        }
     
-    # Devolver el número de registros insertados y el total
-    return {
-        "message": f"Se insertaron {len(items)} registros.",
-        "total_records": final_count
-    }
+    except HTTPException as e:
+        raise e
+
+    except Exception as e:      
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
